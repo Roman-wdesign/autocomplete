@@ -3,15 +3,10 @@
     <v-app-bar
         app
         color="primary"
-        dark
-    >
+        dark>
       <v-spacer></v-spacer>
-
-
       <v-icon>mdi-open-in-new</v-icon>
-
     </v-app-bar>
-
     <v-main>
       <HelloWorld/>
     </v-main>
