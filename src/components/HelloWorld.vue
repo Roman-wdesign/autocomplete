@@ -1,6 +1,18 @@
 <template>
-  <div class="bb">
-    {{info}}
+  <div class="container">
+    <div class="currency"
+         v-for="user in users" :key="user.id"
+         v-bind:id="user.id"
+         v-bind:name="user.name"
+         v-bind:username="user.username"
+         v-bind:email="user.email"
+    >
+      <p>id: {{user.id}}</p>
+      <p>name: {{ user.name }}</p>
+      <p>username: {{user.username}}</p>
+      <p>email: {{user.email}}</p>
+
+    </div>
   </div>
 </template>
 
@@ -13,13 +25,17 @@ export default {
   name: 'HelloWorld',
 
   data: () => ({
-    info: null
+    users: [],
+    id: Number,
+    name: String,
+    username: String
 
   }),
   mounted() {
     axios
         .get('https://jsonplaceholder.typicode.com/users')
-        .then(response => (this.info = response));
+        .then(response => (this.users = response.data));
+
   }
 }
 </script>
