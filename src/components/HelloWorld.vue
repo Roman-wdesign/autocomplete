@@ -8,17 +8,19 @@
          :email="user.email"
          :street="user.address.street"
          :suite="user.address.suite"
+         :city="user.address.city"
 
     >
       <div class="card">
-        <p class="head" style="font-weight: 600; font-size: 1.5rem;">id: {{ user.id }}</p>
-        <p>name: {{ user.name }}</p>
-        <p>username: {{ user.username }}</p>
-        <p>email: {{ user.email }}</p>
+        <p class="card__head" style="font-weight: 600; font-size: 1.5rem;">id: {{ user.id }}</p>
+        <p><strong>name</strong>: {{ user.name }}</p>
+        <p><strong>username</strong>: {{ user.username }}</p>
+        <p><strong>email</strong>: {{ user.email }}</p>
 
         <h4 style="margin: 30px 0 10px 0">Address</h4>
-        <p>street: {{ user.address.street }}</p>
-        <p>suite: {{ user.address.suite }}</p>
+        <p><strong>street</strong>: {{ user.address.street }}</p>
+        <p><strong>suite</strong>: {{ user.address.suite }}</p>
+        <p><strong>city</strong>: {{ user.address.city }}</p>
       </div>
     </div>
   </div>
@@ -40,7 +42,8 @@ export default {
     username: String,
     email: String,
     street: String,
-    suite: String
+    suite: String,
+    city: String
 
   }),
   mounted() {
@@ -57,4 +60,5 @@ export default {
 .card {
   margin: 5rem 0;
 }
+
 </style>
