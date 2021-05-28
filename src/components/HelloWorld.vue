@@ -19,24 +19,24 @@
          :zipcode="user.address.zipcode"
          :lat="user.address.geo.lat"
          :lng="user.address.geo.lng"
-
+         :bs="user.company.bs"
     >
       <div class="card">
 
-        <p class="card__head" style="font-weight: 600; font-size: 1.5rem;">id: {{ user.id }}</p>
+        <p class="card__head" style="font-weight: 600; font-size: 1.7rem;">id: {{ user.id }}</p>
         <p><strong>name</strong>: {{ user.name }}</p>
         <p><strong>username</strong>: {{ user.username }}</p>
         <p><strong>email</strong>: {{ user.email }}</p>
         <div class="address">
 
-          <h4 style="margin: 30px 0 10px 0">Address</h4>
+          <h4 style="margin: 30px 0 10px 0; font-size: 1.3rem">Address</h4>
           <p><strong>street</strong>: {{ user.address.street }}</p>
           <p><strong>suite</strong>: {{ user.address.suite }}</p>
           <p><strong>city</strong>: {{ user.address.city }}</p>
           <p><strong>zipcode</strong>: {{ user.address.zipcode }}</p>
 
           <div class="geo">
-            <h4 style="margin: 30px 0 10px 0">geo</h4>
+            <h4 style="margin: 30px 0 10px 0; font-size: 1.3rem">geo</h4>
 
             <p><strong>lat</strong>: {{ user.address.geo.lat }}</p>
             <p><strong>lng</strong>: {{ user.address.geo.lng }}</p>
@@ -45,9 +45,10 @@
           <p><strong>website</strong>: {{ user.website }}</p>
 
           <div class="company">
-            <h4 style="margin: 30px 0 10px 0">company</h4>
+            <h4 style="margin: 30px 0 10px 0; font-size: 1.3rem">company</h4>
             <p><strong>name</strong>: {{ user.company.name }}</p>
             <p><strong>catchPhrase</strong>: {{ user.company.catchPhrase }}</p>
+            <p><strong>bs</strong>: {{ user.company.bs }}</p>
           </div>
         </div>
       </div>
@@ -67,7 +68,7 @@ export default {
     users: [],
     address: [],
     geo: [],
-    company:[],
+    company: [],
     id: Number,
     name: String,
     username: String,
@@ -80,16 +81,14 @@ export default {
     lng: String,
     phone: String,
     website: String,
-    catchPhrase: String
-
-
-
+    catchPhrase: String,
+    bs: String
   }),
   mounted() {
     axios
         .get('https://jsonplaceholder.typicode.com/users')
         .then(response => (this.users = response.data, console.log(response)))
-        .catch(error => this.users = console.log(error))
+        .catch(error => this.users = console.error(error))
         .finally(() => console.log('%cData loading complete', 'background: #505050FF; color: #FFFFFFFF'))
   }
 }
