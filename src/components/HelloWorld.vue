@@ -2,10 +2,10 @@
   <div class="container">
     <div class="currency"
          v-for="user in users" :key="user.id"
-         v-bind:id="user.id"
-         v-bind:name="user.name"
-         v-bind:username="user.username"
-         v-bind:email="user.email"
+         :id="user.id"
+         :name="user.name"
+         :username="user.username"
+         :email="user.email"
     >
       <p>id: {{user.id}}</p>
       <p>name: {{ user.name }}</p>
@@ -28,7 +28,8 @@ export default {
     users: [],
     id: Number,
     name: String,
-    username: String
+    username: String,
+    email: String
 
   }),
   mounted() {
