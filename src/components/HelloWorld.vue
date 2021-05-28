@@ -9,8 +9,12 @@
          :street="user.address.street"
          :suite="user.address.suite"
          :city="user.address.city"
+
          :phone="user.phone"
          :website="user.website"
+
+         :user="user.company.name"
+         :catchPhrase="user.company.catchPhrase"
 
          :zipcode="user.address.zipcode"
          :lat="user.address.geo.lat"
@@ -39,6 +43,12 @@
           </div>
           <p><strong>phone</strong>: {{ user.phone }}</p>
           <p><strong>website</strong>: {{ user.website }}</p>
+
+          <div class="company">
+            <h4 style="margin: 30px 0 10px 0">company</h4>
+            <p><strong>name</strong>: {{ user.company.name }}</p>
+            <p><strong>catchPhrase</strong>: {{ user.company.catchPhrase }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -57,6 +67,7 @@ export default {
     users: [],
     address: [],
     geo: [],
+    company:[],
     id: Number,
     name: String,
     username: String,
@@ -68,18 +79,18 @@ export default {
     lat: String,
     lng: String,
     phone: String,
-    website: String
+    website: String,
+    catchPhrase: String
+
 
 
   }),
   mounted() {
     axios
         .get('https://jsonplaceholder.typicode.com/users')
-        .then(response => (this.users = response.data,console.log(response)))
-        // .then(response => (this.address = response.data,console.log(response)))
-        // .then(response => (this.geo = response.data,console.log(response)))
+        .then(response => (this.users = response.data, console.log(response)))
         .catch(error => this.users = console.log(error))
-        .finally(() => console.log('Data loading complete'))
+        .finally(() => console.log('%cData loading complete', 'background: #505050FF; color: #FFFFFFFF'))
   }
 }
 </script>
