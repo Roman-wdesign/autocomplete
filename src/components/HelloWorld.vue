@@ -53,6 +53,30 @@
         </div>
       </div>
     </div>
+    <template>
+      <v-card
+          color="white"
+          style="box-shadow: none !important;"
+      >
+
+        <v-card-text>
+          <v-autocomplete
+              v-model="value"
+              :users="users"
+              color="black"
+              hide-no-data
+              hide-selected
+              item-text="Description"
+              item-value="API"
+              label="Search"
+              prepend-icon="mdi-magnify"
+              return-object
+
+          ></v-autocomplete>
+        </v-card-text>
+
+        </v-card>
+    </template>
   </div>
 </template>
 
@@ -82,13 +106,14 @@ export default {
     phone: String,
     website: String,
     catchPhrase: String,
-    bs: String
+    bs: String,
+    value: null
   }),
   mounted() {
     axios
         .get('https://jsonplaceholder.typicode.com/users')
         .then(response => (this.users = response.data, console.log(response)))
-        .catch(error => this.users = console.error(error))
+        .catch(error => this.users = console.log(error))
         .finally(() => console.log('%cData loading complete', 'background: #505050FF; color: #FFFFFFFF'))
   }
 }
