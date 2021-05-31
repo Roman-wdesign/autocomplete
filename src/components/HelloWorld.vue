@@ -1,58 +1,58 @@
 <template>
   <div class="container">
-    <div class="currency"
-         v-for="(user, index) in users" :key="index"
-         :id="user.id"
-         :name="user.name"
-         :username="user.username"
-         :email="user.email"
-         :street="user.address.street"
-         :suite="user.address.suite"
-         :city="user.address.city"
+<!--    <div class="currency"-->
+<!--         v-for="(user, index) in users" :key="index"-->
+<!--         :id="user.id"-->
+<!--         :name="user.name"-->
+<!--         :username="user.username"-->
+<!--         :email="user.email"-->
+<!--         :street="user.address.street"-->
+<!--         :suite="user.address.suite"-->
+<!--         :city="user.address.city"-->
 
-         :phone="user.phone"
-         :website="user.website"
+<!--         :phone="user.phone"-->
+<!--         :website="user.website"-->
 
-         :user="user.company.name"
-         :catchPhrase="user.company.catchPhrase"
+<!--         :user="user.company.name"-->
+<!--         :catchPhrase="user.company.catchPhrase"-->
 
-         :zipcode="user.address.zipcode"
-         :lat="user.address.geo.lat"
-         :lng="user.address.geo.lng"
-         :bs="user.company.bs"
-    >
-      <div class="card">
+<!--         :zipcode="user.address.zipcode"-->
+<!--         :lat="user.address.geo.lat"-->
+<!--         :lng="user.address.geo.lng"-->
+<!--         :bs="user.company.bs"-->
+<!--    >-->
+<!--      <div class="card">-->
 
-        <p class="card__head" style="font-weight: 600; font-size: 1.7rem;">id: {{ user.id }}</p>
-        <p><strong>name</strong>: {{ user.name }}</p>
-        <p><strong>username</strong>: {{ user.username }}</p>
-        <p><strong>email</strong>: {{ user.email }}</p>
-        <div class="address">
+<!--        <p class="card__head" style="font-weight: 600; font-size: 1.7rem;">id: {{ user.id }}</p>-->
+<!--        <p><strong>name</strong>: {{ user.name }}</p>-->
+<!--        <p><strong>username</strong>: {{ user.username }}</p>-->
+<!--        <p><strong>email</strong>: {{ user.email }}</p>-->
+<!--        <div class="address">-->
 
-          <h4 style="margin: 30px 0 10px 0; font-size: 1.3rem">Address</h4>
-          <p><strong>street</strong>: {{ user.address.street }}</p>
-          <p><strong>suite</strong>: {{ user.address.suite }}</p>
-          <p><strong>city</strong>: {{ user.address.city }}</p>
-          <p><strong>zipcode</strong>: {{ user.address.zipcode }}</p>
+<!--          <h4 style="margin: 30px 0 10px 0; font-size: 1.3rem">Address</h4>-->
+<!--          <p><strong>street</strong>: {{ user.address.street }}</p>-->
+<!--          <p><strong>suite</strong>: {{ user.address.suite }}</p>-->
+<!--          <p><strong>city</strong>: {{ user.address.city }}</p>-->
+<!--          <p><strong>zipcode</strong>: {{ user.address.zipcode }}</p>-->
 
-          <div class="geo">
-            <h4 style="margin: 30px 0 10px 0; font-size: 1.3rem">geo</h4>
+<!--          <div class="geo">-->
+<!--            <h4 style="margin: 30px 0 10px 0; font-size: 1.3rem">geo</h4>-->
 
-            <p><strong>lat</strong>: {{ user.address.geo.lat }}</p>
-            <p><strong>lng</strong>: {{ user.address.geo.lng }}</p>
-          </div>
-          <p><strong>phone</strong>: {{ user.phone }}</p>
-          <p><strong>website</strong>: {{ user.website }}</p>
+<!--            <p><strong>lat</strong>: {{ user.address.geo.lat }}</p>-->
+<!--            <p><strong>lng</strong>: {{ user.address.geo.lng }}</p>-->
+<!--          </div>-->
+<!--          <p><strong>phone</strong>: {{ user.phone }}</p>-->
+<!--          <p><strong>website</strong>: {{ user.website }}</p>-->
 
-          <div class="company">
-            <h4 style="margin: 30px 0 10px 0; font-size: 1.3rem">company</h4>
-            <p><strong>name</strong>: {{ user.company.name }}</p>
-            <p><strong>catchPhrase</strong>: {{ user.company.catchPhrase }}</p>
-            <p><strong>bs</strong>: {{ user.company.bs }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+<!--          <div class="company">-->
+<!--            <h4 style="margin: 30px 0 10px 0; font-size: 1.3rem">company</h4>-->
+<!--            <p><strong>name</strong>: {{ user.company.name }}</p>-->
+<!--            <p><strong>catchPhrase</strong>: {{ user.company.catchPhrase }}</p>-->
+<!--            <p><strong>bs</strong>: {{ user.company.bs }}</p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
 
     <v-card
         color="white"
@@ -68,13 +68,16 @@
             color="black"
             hide-no-data
             hide-selected
-            item-text="Description"
+            item-text="id"
             item-value="API"
             label="Search"
             prepend-icon="mdi-magnify"
             return-object
 
-        ></v-autocomplete>
+
+        >
+
+        </v-autocomplete>
       </v-card-text>
       <v-divider></v-divider>
       <v-expand-transition>
@@ -124,8 +127,7 @@ export default {
     website: String,
     catchPhrase: String,
     bs: String,
-    descriptionLimit: 60,
-    entries: [],
+    idLimit: 60,
     isLoading: false,
     model: null,
     search: null,
@@ -143,12 +145,12 @@ export default {
       })
     },
     items () {
-      return this.entries.map(entry => {
-        const Description = entry.Description.length > this.descriptionLimit
-            ? entry.Description.slice(0, this.descriptionLimit) + '...'
-            : entry.Description
+      return this.users.map(user => {
+        const id = user.id.length > this.idLimit
+            ? user.id.slice(0, this.idLimit) + '...'
+            : user.id
 
-        return Object.assign({}, entry, { Description })
+        return Object.assign({}, user, { id })
       })
     },
   },
@@ -185,6 +187,7 @@ export default {
 
 <style lang="scss">
 .card {
+
   margin: 5rem 0;
 }
 </style>
