@@ -63,6 +63,7 @@
         <v-autocomplete
             v-model="model"
             :items="items"
+            :address="address"
             :loading="isLoading"
             :search-input.sync="search"
             color="black"
@@ -150,9 +151,14 @@ export default {
             ? user.id.slice(0, this.idLimit) + '...'
             : user.id
 
-        return Object.assign({}, user, { id })
+        const street = user.address.street
+        const suite = user.address.suite
+        const city = user.address.city
+        const zipcode = user.address.zipcode
+        return Object.assign({}, user, { id }, {street}, {suite}, {city},{zipcode})
       })
     },
+
   },
   watch: {
     search (val) {
