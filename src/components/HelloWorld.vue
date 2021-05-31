@@ -14,7 +14,7 @@
             color="black"
             hide-no-data
             hide-selected
-            item-text="id"
+            item-text="name"
             item-value="API"
             label="Search"
             prepend-icon="mdi-magnify"
@@ -97,9 +97,7 @@ export default {
     },
     items() {
       return this.users.map(user => {
-        const id = user.id.length > this.idLimit
-            ? user.id.slice(0, this.idLimit) + '...'
-            : user.id
+        const id =  user.id
         const company = user.company.name
         const username = user.username
         const name = user.name
@@ -121,7 +119,7 @@ export default {
         const bs = user.company.bs
 
 
-        return Object.assign( {id}, {name},{username},{email},{street}, {suite}, {city}, {zipcode},
+        return Object.assign(  {id},{name},{username},{email},{street}, {suite}, {city}, {zipcode},
             {lat}, {lng}, {phone}, {website}, {company}, {catchPhrase}, {bs})
       })
     },
@@ -143,7 +141,6 @@ export default {
           .catch(error => this.users = console.log(error))
           .finally(() => console.log('%cData users loading complete', 'background: #0096d3; color: #FFFFFFFF'))
       return val;
-
     },
   },
 }
