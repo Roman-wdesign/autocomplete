@@ -100,10 +100,11 @@ export default {
         const id = user.id.length > this.idLimit
             ? user.id.slice(0, this.idLimit) + '...'
             : user.id
-        const companyName = user.company.name
+        const company = user.company.name
         const username = user.username
         const name = user.name
         const email = user.email
+
 
         const street = user.address.street
         const suite = user.address.suite
@@ -120,8 +121,8 @@ export default {
         const bs = user.company.bs
 
 
-        return Object.assign({}, user, {id}, {street}, {suite}, {city}, {zipcode},
-            {lat}, {lng}, {phone}, {website}, {companyName}, {catchPhrase}, {bs},{username},{name},{email})
+        return Object.assign( {id}, {name},{username},{email},{street}, {suite}, {city}, {zipcode},
+            {lat}, {lng}, {phone}, {website}, {company}, {catchPhrase}, {bs})
       })
     },
   },
