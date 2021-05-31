@@ -1,59 +1,5 @@
 <template>
   <div class="container">
-<!--    <div class="currency"-->
-<!--         v-for="(user, index) in users" :key="index"-->
-<!--         :id="user.id"-->
-<!--         :name="user.name"-->
-<!--         :username="user.username"-->
-<!--         :email="user.email"-->
-<!--         :street="user.address.street"-->
-<!--         :suite="user.address.suite"-->
-<!--         :city="user.address.city"-->
-
-<!--         :phone="user.phone"-->
-<!--         :website="user.website"-->
-
-<!--         :user="user.company.name"-->
-<!--         :catchPhrase="user.company.catchPhrase"-->
-
-<!--         :zipcode="user.address.zipcode"-->
-<!--         :lat="user.address.geo.lat"-->
-<!--         :lng="user.address.geo.lng"-->
-<!--         :bs="user.company.bs"-->
-<!--    >-->
-<!--      <div class="card">-->
-
-<!--        <p class="card__head" style="font-weight: 600; font-size: 1.7rem;">id: {{ user.id }}</p>-->
-<!--        <p><strong>name</strong>: {{ user.name }}</p>-->
-<!--        <p><strong>username</strong>: {{ user.username }}</p>-->
-<!--        <p><strong>email</strong>: {{ user.email }}</p>-->
-<!--        <div class="address">-->
-
-<!--          <h4 style="margin: 30px 0 10px 0; font-size: 1.3rem">Address</h4>-->
-<!--          <p><strong>street</strong>: {{ user.address.street }}</p>-->
-<!--          <p><strong>suite</strong>: {{ user.address.suite }}</p>-->
-<!--          <p><strong>city</strong>: {{ user.address.city }}</p>-->
-<!--          <p><strong>zipcode</strong>: {{ user.address.zipcode }}</p>-->
-
-<!--          <div class="geo">-->
-<!--            <h4 style="margin: 30px 0 10px 0; font-size: 1.3rem">geo</h4>-->
-
-<!--            <p><strong>lat</strong>: {{ user.address.geo.lat }}</p>-->
-<!--            <p><strong>lng</strong>: {{ user.address.geo.lng }}</p>-->
-<!--          </div>-->
-<!--          <p><strong>phone</strong>: {{ user.phone }}</p>-->
-<!--          <p><strong>website</strong>: {{ user.website }}</p>-->
-
-<!--          <div class="company">-->
-<!--            <h4 style="margin: 30px 0 10px 0; font-size: 1.3rem">company</h4>-->
-<!--            <p><strong>name</strong>: {{ user.company.name }}</p>-->
-<!--            <p><strong>catchPhrase</strong>: {{ user.company.catchPhrase }}</p>-->
-<!--            <p><strong>bs</strong>: {{ user.company.bs }}</p>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-
     <v-card
         color="white"
         style="box-shadow: none !important;"
@@ -63,7 +9,6 @@
         <v-autocomplete
             v-model="model"
             :items="items"
-            :address="address"
             :loading="isLoading"
             :search-input.sync="search"
             color="black"
@@ -74,8 +19,6 @@
             label="Search"
             prepend-icon="mdi-magnify"
             return-object
-
-
         >
 
         </v-autocomplete>
@@ -84,15 +27,22 @@
       <v-expand-transition>
         <v-list
             v-if="model"
-            class="red lighten-3"
+            class="indigo lighten-4
+"
+
         >
           <v-list-item
-              v-for="(field, i) in fields"
-              :key="i"
+              v-for="(field, name) in fields"
+              :key="name"
           >
             <v-list-item-content>
-              <v-list-item-title v-text="field.value"></v-list-item-title>
-              <v-list-item-subtitle v-text="field.key"></v-list-item-subtitle>
+              <v-list-item-title v-text="field.value"
+                                 style="color: #0f1d36"
+              ></v-list-item-title>
+
+              <v-list-item-subtitle v-text="field.key"
+                                    style="color: #1742c2"
+              ></v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -135,7 +85,7 @@ export default {
 
   }),
   computed: {
-    fields () {
+    fields() {
       if (!this.model) return []
 
       return Object.keys(this.model).map(key => {
@@ -145,23 +95,38 @@ export default {
         }
       })
     },
-    items () {
+    items() {
       return this.users.map(user => {
         const id = user.id.length > this.idLimit
             ? user.id.slice(0, this.idLimit) + '...'
             : user.id
+        const companyName = user.company.name
+        const username = user.username
+        const name = user.name
+        const email = user.email
 
         const street = user.address.street
         const suite = user.address.suite
         const city = user.address.city
         const zipcode = user.address.zipcode
-        return Object.assign({}, user, { id }, {street}, {suite}, {city},{zipcode})
+
+        const lat = user.address.geo.lat
+        const lng = user.address.geo.lng
+
+        const phone = user.phone
+        const website = user.website
+
+        const catchPhrase = user.company.catchPhrase
+        const bs = user.company.bs
+
+
+        return Object.assign({}, user, {id}, {street}, {suite}, {city}, {zipcode},
+            {lat}, {lng}, {phone}, {website}, {companyName}, {catchPhrase}, {bs},{username},{name},{email})
       })
     },
-
   },
   watch: {
-    search (val) {
+    search(val) {
       // Items have already been loaded
       if (this.items.length > 0) return
 
@@ -172,22 +137,14 @@ export default {
 
       // Lazily load input items
       axios
-            .get('https://jsonplaceholder.typicode.com/users')
-            .then(response => (this.users = response.data, console.log(response)))
-            .catch(error => this.users = console.log(error))
-            .finally(() => console.log('%cData users loading complete', 'background: #0096d3; color: #FFFFFFFF'))
+          .get('https://jsonplaceholder.typicode.com/users')
+          .then(response => (this.users = response.data, console.log(response)))
+          .catch(error => this.users = console.log(error))
+          .finally(() => console.log('%cData users loading complete', 'background: #0096d3; color: #FFFFFFFF'))
       return val;
 
     },
   },
-  // mounted() {
-  //   axios
-  //       .get('https://jsonplaceholder.typicode.com/users')
-  //       .then(response => (this.users = response.data, console.log(response)))
-  //       .catch(error => this.users = console.log(error))
-  //       .finally(() => console.log('%cData users loading complete', 'background: #0096d3; color: #FFFFFFFF'))
-  //
-  // }
 }
 </script>
 
