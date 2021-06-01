@@ -25,12 +25,7 @@
       </v-card-text>
       <v-divider></v-divider>
       <v-expand-transition>
-        <v-list
-            v-if="model"
-            class="indigo lighten-4
-"
-
-        >
+        <v-list v-if="model" class="indigo lighten-4">
           <v-list-item
               v-for="(field, name) in fields"
               :key="name"
@@ -47,6 +42,8 @@
           </v-list-item>
         </v-list>
       </v-expand-transition>
+
+
     </v-card>
   </div>
 </template>
@@ -97,7 +94,7 @@ export default {
     },
     items() {
       return this.users.map(user => {
-        const id =  user.id
+        const id = user.id
         const company = user.company.name
         const username = user.username
         const name = user.name
@@ -119,7 +116,7 @@ export default {
         const bs = user.company.bs
 
 
-        return Object.assign(  {id},{name},{username},{email},{street}, {suite}, {city}, {zipcode},
+        return Object.assign({id}, {name}, {username}, {email}, {street}, {suite}, {city}, {zipcode},
             {lat}, {lng}, {phone}, {website}, {company}, {catchPhrase}, {bs})
       })
     },
@@ -135,11 +132,14 @@ export default {
       this.isLoading = true
 
       // Lazily load input items
-      axios
-          .get('https://jsonplaceholder.typicode.com/users')
+      axios.get('https://jsonplaceholder.typicode.com/users')
           .then(response => (this.users = response.data, console.log(response)))
           .catch(error => this.users = console.log(error))
           .finally(() => console.log('%cData users loading complete', 'background: #0096d3; color: #FFFFFFFF'))
+      axios.get('https://jsonplaceholder.typicode.com/photos')
+          .then(response => (this.photos = response.data, console.log(response)))
+          .catch(error => this.photos = console.log(error))
+          .finally(() => console.log('%cData photos loading complete', 'background: #1742c2; color: #FFFFFFFF'))
       return val;
     },
   },
@@ -148,7 +148,7 @@ export default {
 
 <style lang="scss">
 .card {
-
+  //color: #1742c2;
   margin: 5rem 0;
 }
 </style>
