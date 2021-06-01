@@ -134,11 +134,11 @@ export default {
       // Lazily load input items
       axios.get('https://jsonplaceholder.typicode.com/users')
           .then(response => (this.users = response.data, console.log(response)))
-          .catch(error => this.users = console.log(error))
+          .catch(error => this.users = console.log(error, 'Data users error', 'background: #EF1919FF; color: #FFFFFFFF'))
           .finally(() => console.log('%cData users loading complete', 'background: #0096d3; color: #FFFFFFFF'))
       axios.get('https://jsonplaceholder.typicode.com/photos')
           .then(response => (this.photos = response.data, console.log(response)))
-          .catch(error => this.photos = console.log(error))
+          .catch(error => this.photos = console.log(error, 'Data photos error', 'background: #EF1919FF; color: #FFFFFFFF'))
           .finally(() => console.log('%cData photos loading complete', 'background: #1742c2; color: #FFFFFFFF'))
       return val;
     },
@@ -148,7 +148,7 @@ export default {
 
 <style lang="scss">
 .card {
-  //color: #1742c2;
+  //color: #ef1919;
   margin: 5rem 0;
 }
 </style>
