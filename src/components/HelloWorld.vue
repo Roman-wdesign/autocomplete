@@ -9,6 +9,7 @@
         <v-autocomplete
             v-model="model"
             :items="items"
+            :images="images"
             :loading="isLoading"
             :search-input.sync="search"
             color="black"
@@ -20,7 +21,25 @@
             prepend-icon="mdi-magnify"
             return-object
         >
+          <template v-slot:item="data">
+<!--                        <template v-if="typeof data.item !== 'object'">-->
+<!--                          <v-list-item-content v-text="data.item"></v-list-item-content>-->
+<!--                        </template>-->
+            <template left>
+              <v-list-item-avatar>
+                <v-img
 
+                    max-height="150"
+                    max-width="250"
+                    src="https://picsum.photos/id/11/100/60"
+                ></v-img>
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <v-list-item-title v-html="data.item.id"></v-list-item-title>
+                <v-list-item-subtitle v-html="data.item.city"></v-list-item-subtitle>
+              </v-list-item-content>
+            </template>
+          </template>
         </v-autocomplete>
       </v-card-text>
       <v-divider></v-divider>
@@ -58,6 +77,7 @@ export default {
 
   data: () => ({
     users: [],
+    photos: [],
     address: [],
     geo: [],
     company: [],
@@ -79,6 +99,10 @@ export default {
     isLoading: false,
     model: null,
     search: null,
+    title: String,
+    url: String,
+    thumbnailUrl: String,
+
 
   }),
   computed: {
@@ -92,6 +116,7 @@ export default {
         }
       })
     },
+
     items() {
       return this.users.map(user => {
         const id = user.id
@@ -118,31 +143,40 @@ export default {
 
         return Object.assign({id}, {name}, {username}, {email}, {street}, {suite}, {city}, {zipcode},
             {lat}, {lng}, {phone}, {website}, {company}, {catchPhrase}, {bs})
+
+      });
+    },
+    images() {
+      return this.photos.map(photo => {
+        const id = photo.id
+        const thumbnailUrl = photo.thumbnailUrl
+
+
+        return Object.assign({id}, thumbnailUrl)
+
       })
     },
   },
   watch: {
     search(val) {
-      // Items have already been loaded
+
       if (this.items.length > 0) return
 
-      // Items have already been requested
       if (this.isLoading) return
 
       this.isLoading = true
 
-      // Lazily load input items
       axios.get('https://jsonplaceholder.typicode.com/users')
           .then(response => (this.users = response.data, console.log(response)))
-          .catch(error => this.users = console.log(error, 'Data users error', 'background: #EF1919FF; color: #FFFFFFFF'))
+          .catch(err => console.log(err))
           .finally(() => console.log('%cData users loading complete', 'background: #0096d3; color: #FFFFFFFF'))
       axios.get('https://jsonplaceholder.typicode.com/photos')
           .then(response => (this.photos = response.data, console.log(response)))
-          .catch(error => this.photos = console.log(error, 'Data photos error', 'background: #EF1919FF; color: #FFFFFFFF'))
+          .catch(err => console.log(err))
           .finally(() => console.log('%cData photos loading complete', 'background: #1742c2; color: #FFFFFFFF'))
       return val;
-    },
-  },
+    }
+  }
 }
 </script>
 
