@@ -155,7 +155,7 @@ export default {
         return Object.assign({id}, thumbnailUrl)
 
       })
-    },
+    }
   },
   watch: {
     search(val) {
