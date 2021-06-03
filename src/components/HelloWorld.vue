@@ -31,7 +31,7 @@
 
                     max-height="150"
                     max-width="250"
-                    src="https://picsum.photos/id/11/100/60"
+                    :src="data.item.thumbnailUrl"
                 ></v-img>
               </v-list-item-avatar>
               <v-list-item-content>
@@ -148,11 +148,8 @@ export default {
     },
     images() {
       return this.photos.map(photo => {
-        const id = photo.id
         const thumbnailUrl = photo.thumbnailUrl
-
-
-        return Object.assign({id}, thumbnailUrl)
+        return Object.assign({thumbnailUrl})
 
       })
     }
@@ -166,14 +163,48 @@ export default {
 
       this.isLoading = true
 
-      axios.get('https://jsonplaceholder.typicode.com/users')
-          .then(response => (this.users = response.data, console.log(response)))
-          .catch(err => console.log(err))
-          .finally(() => console.log('%cData users loading complete', 'background: #0096d3; color: #FFFFFFFF'))
-      axios.get('https://jsonplaceholder.typicode.com/photos')
-          .then(response => (this.photos = response.data, console.log(response)))
-          .catch(err => console.log(err))
-          .finally(() => console.log('%cData photos loading complete', 'background: #1742c2; color: #FFFFFFFF'))
+      axios.all([
+        axios.get('https://jsonplaceholder.typicode.com/users')
+            .finally(() => console.log('%cData users loading complete', 'background: #0096d3; color: #FFFFFFFF'))
+            // .then(response => (this.users = response.data, console.log(response)))
+            .catch(function (error) {
+              if (error.response) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+              } else if (error.request) {
+                console.log(error.request);
+              } else {
+                console.log('Error', error.message);
+              }
+              console.log(error.config);
+            })
+
+        ,
+
+        axios.get('https://jsonplaceholder.typicode.com/photos')
+            // .then(response => (this.photos = response.data, console.log(response)))
+            .finally(() => console.log('%cData photos loading complete', 'background: #1742c2; color: #FFFFFFFF'))
+            .catch(function (error) {
+              if (error.response) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+              } else if (error.request) {
+                console.log(error.request);
+              } else {
+                console.log('Error', error.message);
+              }
+              console.log(error.config);
+            })
+
+
+      ])
+          .then(response => {
+            console.log(this.users = response[0].data);
+            console.log(this.photos = response[1].data);
+
+      })
       return val;
     }
   }
