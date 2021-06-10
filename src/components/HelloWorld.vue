@@ -22,17 +22,13 @@
             return-object
         >
           <template v-slot:item="data">
-<!--                        <template v-if="typeof data.item !== 'object'">-->
-<!--                          <v-list-item-content v-text="data.item"></v-list-item-content>-->
-<!--                        </template>-->
-            <template left>
+                <template left>
               <v-list-item-avatar>
                 <v-img
 
                     max-height="150"
                     max-width="250"
-                    :src="data.item.thumbnailUrl"
-                ></v-img>
+                >{{thumbnailUrl}}</v-img>
               </v-list-item-avatar>
               <v-list-item-content>
                 <v-list-item-title v-html="data.item.id"></v-list-item-title>
@@ -61,8 +57,6 @@
           </v-list-item>
         </v-list>
       </v-expand-transition>
-
-
     </v-card>
   </div>
 </template>
@@ -72,6 +66,7 @@
 import axios from 'axios'
 
 export default {
+
 
   name: 'HelloWorld',
 
@@ -152,7 +147,7 @@ export default {
         return Object.assign({thumbnailUrl})
 
       })
-    }
+    },
   },
   watch: {
     search(val) {
@@ -163,10 +158,10 @@ export default {
 
       this.isLoading = true
 
+
       axios.all([
         axios.get('https://jsonplaceholder.typicode.com/users')
             .finally(() => console.log('%cData users loading complete', 'background: #0096d3; color: #FFFFFFFF'))
-            // .then(response => (this.users = response.data, console.log(response)))
             .catch(function (error) {
               if (error.response) {
                 console.log(error.response.data);
@@ -179,11 +174,8 @@ export default {
               }
               console.log(error.config);
             })
-
         ,
-
         axios.get('https://jsonplaceholder.typicode.com/photos')
-            // .then(response => (this.photos = response.data, console.log(response)))
             .finally(() => console.log('%cData photos loading complete', 'background: #1742c2; color: #FFFFFFFF'))
             .catch(function (error) {
               if (error.response) {
@@ -197,21 +189,22 @@ export default {
               }
               console.log(error.config);
             })
-
-
       ])
           .then(response => {
             console.log(this.users = response[0].data);
             console.log(this.photos = response[1].data);
 
-      })
+          })
       return val;
     }
-  }
+  },
 }
 </script>
 
 <style lang="scss">
+//.avatarImg{
+//  background-image: ;
+//}
 .card {
   //color: #ef1919;
   margin: 5rem 0;
